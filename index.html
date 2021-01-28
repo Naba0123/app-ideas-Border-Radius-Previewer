@@ -1,0 +1,82 @@
+<html lang="ja">
+  <head>
+    <title>Border Radius Previewer</title>
+    <meta charset="utf-8">
+    <style>
+      #main-content {
+        border: 1px solid black;
+        padding: 1em;
+        margin: 1em 0;
+      }
+      #result-box {
+        width: 200px;
+        height: 150px; 
+        background-color: blue; 
+        color: white;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Border Radius Previewer</h1>
+    
+    <div id="main-content">
+
+      <table border="0">
+        <tr>
+          <td>
+            <div class="input-group">
+              <label>Top Left</label><br>
+              <input name="top_left" type="text" onchange="app.refreshPreview()">
+            </div>
+          </td>
+          <td></td>
+          <td>
+            <div class="input-group">
+              <label>Top Right</label><br>
+              <input name="top_right" type="text" onchange="app.refreshPreview()">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <div id="result-box">
+              <p>Preview</p>
+            </div>
+          </td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="input-group">
+              <label>Bottom Left</label><br>
+              <input name="bottom_left" type="text" onchange="app.refreshPreview()">
+            </div>
+          </td>
+          <td></td>
+          <td>
+            <div class="input-group">
+              <label>Bottom Right</label><br>
+              <input name="bottom_right" type="text" onchange="app.refreshPreview()">
+            </div>
+          </td>
+        </tr>
+      </table>
+
+    </div>
+
+    <p><a href="https://github.com/Naba0123/app-ideas-Border-Radius-Previewer">GitHub</a></p>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+      const app = {
+        refreshPreview: () => {
+          
+        }
+      }
+    </script>
+  </body>
+</html>

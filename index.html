@@ -8,14 +8,20 @@
         padding: 1em;
         margin: 1em 0;
       }
-      #result-box {
-        width: 200px;
-        height: 150px; 
+      hr {
+        margin: 2em 0;
+      }
+      #preview-box {
+        width: 500px;
+        height: 200px; 
         background-color: blue; 
         color: white;
         text-align: center;
         display: table-cell;
         vertical-align: middle;
+      }
+      .align-right {
+        text-align: right;
       }
     </style>
   </head>
@@ -26,45 +32,79 @@
 
       <table border="0">
         <tr>
+          <td></td>
           <td>
             <div class="input-group">
               <label>Top Left</label><br>
-              <input name="top_left" type="text" onchange="app.refreshPreview()">
+              <input name="top_left" type="text" onchange="app.refreshResult()">
+            </div>
+          </td>
+          <td>
+            <div class="input-group align-right">
+              <label>Top Right</label><br>
+              <input name="top_right" type="text" onchange="app.refreshResult()">
             </div>
           </td>
           <td></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="input-group align-right">
+              <label>Left Top</label><br>
+              <input name="left_top" type="text" onchange="app.refreshResult()">
+            </div>
+          </td>
+          <td colspan="2" rowspan="2">
+            <div id="preview-box">
+              <p>Preview<br>width: 500px, height: 200px</p>
+            </div>
+          </td>
           <td>
             <div class="input-group">
-              <label>Top Right</label><br>
-              <input name="top_right" type="text" onchange="app.refreshPreview()">
+              <label>Right Top</label><br>
+              <input name="right_top" type="text" onchange="app.refreshResult()">
             </div>
           </td>
         </tr>
         <tr>
-          <td></td>
           <td>
-            <div id="result-box">
-              <p>Preview</p>
+            <div class="input-group align-right">
+              <label>Left Bottom</label><br>
+              <input name="left_bottom" type="text" onchange="app.refreshResult()">
             </div>
           </td>
-          <td></td>
+          <td>
+            <div class="input-group">
+              <label>Right Bottom</label><br>
+              <input name="right_bottom" type="text" onchange="app.refreshResult()">
+            </div>
+          </td>
         </tr>
         <tr>
+          <td></td>
           <td>
             <div class="input-group">
               <label>Bottom Left</label><br>
-              <input name="bottom_left" type="text" onchange="app.refreshPreview()">
+              <input name="bottom_left" type="text" onchange="app.refreshResult()">
+            </div>
+          </td>
+          <td>
+            <div class="input-group align-right">
+              <label>Bottom Right</label><br>
+              <input name="bottom_right" type="text" onchange="app.refreshResult()">
             </div>
           </td>
           <td></td>
-          <td>
-            <div class="input-group">
-              <label>Bottom Right</label><br>
-              <input name="bottom_right" type="text" onchange="app.refreshPreview()">
-            </div>
-          </td>
         </tr>
       </table>
+
+      <hr>
+
+      <div>
+        <h2>Result CSS</h2>
+        <textarea id="result" style="width: 100%" readonly></textarea>
+        <button onclick="app.copyResult()">Copy CSS</button>
+      </div>
 
     </div>
 
@@ -73,10 +113,37 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
       const app = {
-        refreshPreview: () => {
-          
+        $result: null,
+        $preview: null,
+        init: () => {
+          app.$result = $('#result');
+          app.$preview = $('#preview-box');
+        },
+        refreshResult: () => {
+          const topLeft     = $('input[name=top_left]').val() || "0";
+          const topRight    = $('input[name=top_right]').val() || "0";
+          const leftTop     = $('input[name=left_top]').val() || "0";
+          const rightTop    = $('input[name=right_top]').val() || "0";
+          const leftBottom  = $('input[name=left_bottom]').val() || "0";
+          const rightBottom = $('input[name=right_bottom]').val() || "0";
+          const bottomLeft  = $('input[name=bottom_left]').val() || "0";
+          const bottomRight = $('input[name=bottom_right]').val() || "0";
+
+          const borderRadiusVal = topLeft + " " + topRight + " " + bottomRight + " " + bottomLeft
+           + " / " + leftTop + " " + rightTop + " " + rightBottom + " " + leftBottom;
+          app.$preview.css("border-radius", borderRadiusVal);
+          app.$result.val("border-radius:" + borderRadiusVal + ";");
+        },
+        copyResult: () => {
+          app.$result.select();
+          document.execCommand('copy');
+          alert("Copy done!");
         }
       }
+      $(function() {
+        app.init();
+        app.refreshResult();
+      });
     </script>
   </body>
 </html>
